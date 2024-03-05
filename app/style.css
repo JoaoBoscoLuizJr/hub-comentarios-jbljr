@@ -1,0 +1,42 @@
+#form-comentarios textarea, input {
+    background-attachment: fixed, ;
+    background-color: blanchedalmond;
+    color: black;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 5px auto;
+}
+
+h1 {
+    width: 400px;
+    margin: 50px auto;
+    color: red;
+}
+
+.comentarios label{
+    display: block;
+}
+
+.comentarios input{
+    display: block;
+}
+
+.comentarios * {
+    display: block;
+}
+
+.bnt-submit{
+    border: 1px solid black;
+    width: 100px;
+    background-color: whitesmoke;
+    color: black;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+
+}
