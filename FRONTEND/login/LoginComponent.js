@@ -38,7 +38,7 @@ const handleLogin = (event) => {
         handleShowHide();
 
         const inputAuthor = document.getElementById('inputAuthor')
-        inputAuthor.value = `${user.getFirstname()}` + ' ' +` ${user.getLastname()}`
+        inputAuthor.value = `${user.getFirstname(result.firstname)}` + ' ' +` ${user.getLastname(result.lastname)}`
 
 
     }).catch(error => {
