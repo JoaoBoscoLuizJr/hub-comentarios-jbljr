@@ -52,6 +52,16 @@ const loadComment = () => {
     })
 }
 
+const getAuthor = () =>{
+    let usernameTxt = document.getElementById('username')
+
+}
+
+const setAuthor = (author) =>{
+    return usernameTxt.document.getElementById('username').innerHTML= 'username'
+
+}
+
 
 const displayComment = (comments) => {
     const divFeed = document.getElementById('comment-feed');
@@ -92,4 +102,6 @@ const CommentComponent = {
 
 }
 
+
 export { CommentComponent }
+export {setInputComment}

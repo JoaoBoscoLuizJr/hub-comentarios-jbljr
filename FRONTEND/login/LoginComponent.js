@@ -1,7 +1,6 @@
 import { User } from "../models/user.model.js"
 import {LoginService } from "../services/Login.services.js";
 
-
 const getLoginInputs = () => {
     return {
         username: document.getElementById("username"),
@@ -37,8 +36,13 @@ const handleLogin = (event) => {
         user.setFirstname(result.firstname)
         user.setLastname(result.lastname)
         handleShowHide();
+
+        const inputAuthor = document.getElementById('inputAuthor')
+        inputAuthor.value = `${user.getFirstname()}` + ' ' +` ${user.getLastname()}`
+
+
     }).catch(error => {
-        alert(`Login inválido. Error: ${error.message}`)
+        alert(`Login valido.`)
     })
 
     console.log(user)
