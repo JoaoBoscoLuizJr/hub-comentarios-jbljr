@@ -3,8 +3,8 @@ import {LoginService } from "../services/Login.services.js";
 
 const getLoginInputs = () => {
     return {
-        username: document.getElementById("username"),
-        password: document.getElementById("password")
+        username: document.getElementById('username'),
+        password: document.getElementById('password')
     }
 }
 
@@ -37,12 +37,11 @@ const handleLogin = (event) => {
         user.setLastname(result.lastname)
         handleShowHide();
 
-        const inputAuthor = document.getElementById('inputAuthor')
-        inputAuthor.value = `${user.getFirstname(result.firstname)}` + ' ' +` ${user.getLastname(result.lastname)}`
+            setInputComment(`${result.firstname} ${result.lastname}`)
 
 
     }).catch(error => {
-        alert(`Login valido.`)
+        alert(`Login failed: ${error.message}`)
     })
 
     console.log(user)
