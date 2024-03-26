@@ -31,14 +31,18 @@ const handleLogin = (event) => {
 
     LoginService.apiAuthUser(user).then(result => {
         console.log(result)
+        user.setUsername(result.username)
         user.setId(result.id)
         user.setPassword(null)
         user.setFirstname(result.firstname)
         user.setLastname(result.lastname)
+        const inputAuthor = document.getElementById('inputAuthor');
+        inputAuthor.value = result.firstname + ' ' + result.lastname;
+        inputAuthor.disabled = true;
+        inputAuthor.style.backgroundColor = '#444'
+        inputAuthor.style.color = '#FFF'
+
         handleShowHide();
-
-            setInputComment(`${result.firstname} ${result.lastname}`)
-
 
     }).catch(error => {
         alert(`Login failed: ${error.message}`)

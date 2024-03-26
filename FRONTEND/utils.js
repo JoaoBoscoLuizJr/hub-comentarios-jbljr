@@ -11,29 +11,22 @@ const formattedDate = () =>{
     return formatted.replace(',', ' às') + 'hs';
 }
 
-function randomColor() {
-    return '#' + Math.floor(Math.random()*16777215).toString(16);
-}
-function randomColors(colors) {
-    const valores = colors.charAt(0).toUpperCase();
-    const color = randomColor();
-    document.body.style.backgroundColor = color;
-    document.body.textContent = valores;
-    document.body.title = darkColors
-    document.body.title = lightColor
+const randomInt = (value) => {
+    return Math.floor(Math.random() * value)
 }
 
-function darkColors() {
-    const darkPalette = ['#2c3e50', '#34495e', '#7f8c8d', '#2c3e50', '#34495e'];
-    return randomColor(darkPalette);
-    
+const randomColors = () => {
+    let darkPalette = ['070F2B', '1B1A55', '535C91', '9290C3', '030637', '3C0753', '720455']
+    let lightPalette = ['FFBE98', 'FEECE2', 'F6FDC3', 'CDFADB', 'FFF8E3', 'F2F1EB', 'F1EAFF']
+
+    let colors = []
+    colors.push(darkPalette)
+    colors.push(lightPalette)
+
+    return {
+        dark: colors[0][randomInt(colors[0].length)],
+        light: colors[1][randomInt(colors[1].length)]
+    }
 }
 
-function lightColor() {
-    const lightPalette = ['#ecf0f1', '#bdc3c7', '#d7dbdd', '#f2f3f4', '#e5e7e9'];
-    return randomColor(lightPalette);
-
-}
-
-
-export {randomColor, formattedDate}
+export { formattedDate, randomColors }

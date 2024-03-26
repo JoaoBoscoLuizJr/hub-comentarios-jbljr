@@ -1,4 +1,5 @@
 import { formattedDate } from "../utils.js";
+import {randomColors} from "../utils.js"
 import { CommentService } from "../services/comment.services.js";
 import { Comment } from "../models/comment.model.js";
 import { User } from "../models/user.model.js";
@@ -77,8 +78,8 @@ const displayComment = (comments) => {
                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
                 preserveAspectRatio="xMidYMid slice" focusable="false">
                 <title>comentário</title>
-                <rect width="100%" height="100%" fill="#444"></rect>
-                <text x="35%" y="50%" fill="#000000"dy=".3em">${item
+                <rect width="100%" height="100%" fill="#${randomColors().dark}"></rect>
+                <text x="35%" y="50%" fill="#${randomColors().light}"dy=".3em">${item
                   .getAuthor()
                   .charAt(0)}</text>
             </svg>
@@ -99,15 +100,17 @@ const displayComment = (comments) => {
 
 const CommentComponent = {
   run: () => {
-    const formComentario = document.getElementById("formComment");
-    formComentario.addEventListener("submit", submitComment);
-    window.onload = () => {
-      loadComment();
-    };
+      const formComentario = document.getElementById('formComment')
+      formComentario.addEventListener("submit", submitComment)
+      window.onload = () => {
+          loadComment();
+      }
   },
   params: (usr) => {
-    _user = usr;
-  },
-};
+      _user = usr;
+  }
+}
 
-export { CommentComponent };
+
+
+export { CommentComponent, setInputComment };
