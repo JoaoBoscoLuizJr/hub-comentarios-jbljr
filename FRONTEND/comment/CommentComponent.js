@@ -21,7 +21,7 @@ const setInputComment = (authorValue, commentValue) => {
 
 const clearCommentField = () => {
   const { comment } = getInputComment();
-  comment.value = "";
+  comment.value = '';
 };
 
 const getInputCommentValue = () => {
