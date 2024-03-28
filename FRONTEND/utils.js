@@ -1,14 +1,14 @@
-const formattedDate = () =>{
-    const currentDate = new Date();
-    const options = { 
+const formatDate = (data) => {
+    const currentDate = new Date(data);
+    const options = {
         day: '2-digit',
         month: 'short',
         hour: 'numeric',
         hour12: false
     };
 
-    let formatted = currentDate.toLocaleDateString('pt-BR',options)
-    return formatted.replace(',', ' às') + 'hs';
+    let formattedDate = currentDate.toLocaleDateString('pt-BR', options)
+    return formattedDate.replace(',', ' às') + 'hs';
 }
 
 const randomInt = (value) => {
@@ -29,4 +29,4 @@ const randomColors = () => {
     }
 }
 
-export { formattedDate, randomColors }
+export { formatDate, randomColors }
