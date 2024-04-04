@@ -1,45 +1,43 @@
 import { formatDate, randomColors } from "../../utils.js";
 import { CommentService } from '../../services/comment.services.js'
 import { Comment } from "../../models/comment.model.js";
-import { User } from "../../models/user.model.js";
+import { StorageServices } from "../../services/localStorage.service.js";
 
-
-let _user = new User()
-
-const getInputComment = () => {
-    return {
-        author: document.getElementById('inputAuthor'),
-        comment: document.getElementById('inputComment')
-    }
+const getCommentInput = () => {
+    return document.getElementById('inputComment')
 }
-
-const setInputComment = (authorValue, commentValue) => {
-    const { author, comment } = getInputComment();
-    author.value = authorValue
+const getInputCommentValue = () => {
+    return document.getElementById('inputComment').value
+}
+const setInputComment = (commentValue) => {
+    const { comment } = getCommentInput();
     comment.value = commentValue
 }
 
 const clearCommentField = () => {
-    const { comment } = getInputComment();
-    comment.value = ''
+    getCommentInput().value = ''
 }
 
-
-const getInputCommentValue = () => {
-    return {
-        author: document.getElementById('inputAuthor').value,
-        comment_text: document.getElementById('inputComment').value
-    }
+const setAuthorCommentField = (usr) => {
+    const inputAuthor = document.getElementById('inputAuthor');
+    inputAuthor.value = usr.firstname + ' ' + usr.lastname;
+    inputAuthor.style.backgroundColor = '#444'
+    inputAuthor.style.color = '#FFF'
 }
 
 const submitComment = (event) => {
     event.preventDefault();
-    const comment = getInputCommentValue(); 
-    CommentService.apiPostComment(comment).then(result => { 
-            alert(result)
-            clearCommentField();
-            loadComment();
-    }).catch((error) => { 
+
+    const comment = {
+        userId: StorageServices.user.get().getId(),
+        comment_text: getInputCommentValue()
+    };
+
+    CommentService.apiPostComment(comment).then(result => {
+        alert(result)
+        clearCommentField();
+        loadComment();
+    }).catch((error) => {
         console.log(error)
     });
 }
@@ -48,7 +46,7 @@ const loadComment = () => {
     // Dados carregados da API
     CommentService.apiGetComment().then(result => {
         const comments = result.map(
-            (comment) => new Comment(comment.id, comment.author, comment.comment_text, comment.created_at, comment.updated_at)
+            (comment) => new Comment(comment.id, comment.userId, comment.author, comment.comment_text, comment.created_at, comment.updated_at)
         );
         displayComment(comments)
     }).catch(error => {
@@ -57,10 +55,9 @@ const loadComment = () => {
     })
 }
 
-
 const displayComment = (comments) => {
     const divFeed = document.getElementById('comment-feed');
-    divFeed.innerHTML = ``
+    divFeed.innerHTML = `<>`
     comments.forEach(item => {
         const divDisplay = document.createElement('div');
         divDisplay.className = 'd-flex text-body-secondary pt-3 border-bottom'
@@ -93,9 +90,6 @@ const CommentComponent = {
             loadComment();
         }
     },
-    params: (usr) => {
-        _user = usr;
-    }
 }
 
-export { CommentComponent, setInputComment }
+export { CommentComponent, setInputComment, setAuthorCommentField }

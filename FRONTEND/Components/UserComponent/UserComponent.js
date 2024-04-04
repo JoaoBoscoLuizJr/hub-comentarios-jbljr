@@ -1,8 +1,10 @@
+import { StorageServices } from "../../services/localStorage.service.js";
+import {UserService} from "../../services/user.service.js";
 import { randomColors } from "../../utils.js";
-import { getCurrentUser } from "../LoginComponent/LoginComponent.js"
 
 const loadUserData = () => {
-    displayUserData(getCurrentUser())
+
+    displayUserData(StorageServices.user.get())
 }
 
 const iconeUsuario = (avatarColor) => {
@@ -21,12 +23,20 @@ fill="none">
 `
 }
 
+const handleMeusComentarios = () => {
+    const userId = this.props
+    UserService.apiGetUserComment().then(data=>{
+        displayUserDataComments(data)
+    })
+}
+
 const displayUserData = (user) => {
     const userContent = document.getElementById('user-content');
     userContent.innerHTML = ``
     const newDiv = document.createElement('div');
     newDiv.innerHTML = `
     ${iconeUsuario(randomColors().dark)}
+    <button class="row"></button>
     <div class="row d-inline-flex text-body-secondary rounded">
         <div class="col-4">
             <label class="form-label" for="user_name">Nome</label>
@@ -48,12 +58,39 @@ const displayUserData = (user) => {
         <div class="col-4">
             <label class="form-label" for="user_password">Senha</label>
             <input class="form-control" type="password" name="user_password" id="user_password"
-                value="${user.getPassword()}" readonly>
+                value="........" readonly>
         </div>
     </div>`
 
     userContent.appendChild(newDiv)
 
+}
+
+const displayComment = (comments) => {
+    const divFeed = document.getElementById('comment-feed');
+    divFeed.innerHTML = ``
+    comments.forEach(item => {
+        const divDisplay = document.createElement('div');
+        divDisplay.className = 'd-flex text-body-secondary pt-3 border-bottom'
+        divDisplay.innerHTML = `
+            <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
+                xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
+                preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>comentário</title>
+                <rect width="100%" height="100%" fill="#${randomColors().dark}"></rect>
+                <text x="35%" y="50%" fill="#${randomColors().light}"dy=".3em">${item.getAuthor().charAt(0)}</text>
+            </svg>
+            <p class="pb-3 mb-0 small lh-sm text-gray-dark">
+                <strong class="d-block text-gray-dark">@${item.getAuthor()}
+                <span class="date-style badge text-bg-secondary">${formatDate(item.getCreatedAt())}</span>
+                </strong>
+                <span class="comment">
+                ${item.getComment()}
+                </span>
+            </p>        
+        `
+        divFeed.appendChild(divDisplay);
+    })
 }
 
 const handleShowHideUser = () => {
@@ -75,6 +112,8 @@ const UserComponent = {
         btnMeusDados.addEventListener('click', handleShowHideUser);
         const btnSairMDados = document.getElementById('btnSairMDados');
         btnSairMDados.addEventListener('click', handleShowHideUser);
+        const btnMeusComentarios = document.getElementById('btnMeusComentarios');
+        btnMeusComentarios
     }
 }
 
